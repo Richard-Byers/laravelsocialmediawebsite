@@ -35,7 +35,7 @@ class UserController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         auth()->logout();
         return redirect('/')->with('success', 'You have successfully logged out.');
@@ -49,4 +49,9 @@ class UserController extends Controller
             return view('homepage');
         }
     }
+
+    public function profile(User $user) {
+        return view('profile-posts', ['username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    }
+
 }
